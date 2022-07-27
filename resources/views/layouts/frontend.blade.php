@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>@yield('title')</title>	
+	<title>@yield('title')</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/frontend/images/favicon.ico')}}">
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic,900,900italic&amp;subset=latin,latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open%20Sans:300,400,400italic,600,600italic,700,700italic&amp;subset=latin,latin-ext" rel="stylesheet">
@@ -42,7 +42,7 @@
 						<div class="topbar-menu right-menu">
 							<ul>
 								<li class="menu-item" ><a title="Register or Login" href="login.html">Login</a></li>
-								<li class="menu-item" ><a title="Register or Login" href="register.html">Register</a></li>						
+								<li class="menu-item" ><a title="Register or Login" href="register.html">Register</a></li>
 							</ul>
 						</div>
 					</div>
@@ -62,7 +62,7 @@
 									<button form="form-search-top" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
 									<div class="wrap-list-cate">
 										<input type="hidden" name="product-cate" value="0" id="product-cate">
-										<a href="#" class="link-control">All Category</a>
+										{{-- <a href="#" class="link-control">All Category</a>
 										<ul class="list-cate">
 											<li class="level-0">All Category</li>
 											<li class="level-1">-Electronics</li>
@@ -81,7 +81,7 @@
 											<li class="level-2">Batteries & Chargens</li>
 											<li class="level-2">Mp3 Player & Headphones</li>
 											<li class="level-2">Table & Accessories</li>
-										</ul>
+										</ul> --}}
 									</div>
 								</form>
 							</div>
@@ -89,10 +89,10 @@
 
 						<div class="wrap-icon right-section">
 							<div class="wrap-icon-section minicart">
-								<a href="#" class="link-direction">
+								<a href="{{route('frontend.cart.list')}}" class="link-direction">
 									<i class="fa fa-shopping-basket" aria-hidden="true"></i>
 									<div class="left-info">
-										<span class="index">4 items</span>
+										<span class="index">{{ $carts->count() }} items</span>
 										<span class="title">CART</span>
 									</div>
 								</a>
@@ -115,14 +115,14 @@
 									<a href="{{route('frontend.shop')}}" class="link-term mercado-item-title">Shop</a>
 								</li>
 								<li class="menu-item">
-									<a href="cart.html" class="link-term mercado-item-title">Cart</a>
+									<a href="{{route('frontend.cart.list')}}" class="link-term mercado-item-title">Cart</a>
 								</li>
 								<li class="menu-item">
 									<a href="checkout.html" class="link-term mercado-item-title">Checkout</a>
 								</li>
 								<li class="menu-item">
 									<a href="contact-us.html" class="link-term mercado-item-title">Contact Us</a>
-								</li>																	
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -161,7 +161,7 @@
 											<li>
 												<i class="fa fa-envelope" aria-hidden="true"></i>
 												<p class="contact-txt">Contact@yourcompany.com</p>
-											</li>											
+											</li>
 										</ul>
 									</div>
 								</div>
@@ -267,7 +267,7 @@
 					<div class="coppy-right-item item-right">
 						<div class="wrap-nav horizontal-nav">
 							<ul>
-								<li class="menu-item"><a href="about-us.html" class="link-term">About us</a></li>								
+								<li class="menu-item"><a href="about-us.html" class="link-term">About us</a></li>
 								<li class="menu-item"><a href="privacy-policy.html" class="link-term">Privacy Policy</a></li>
 								<li class="menu-item"><a href="terms-conditions.html" class="link-term">Terms & Conditions</a></li>
 							</ul>
@@ -278,7 +278,7 @@
 			</div>
 		</div>
 	</footer>
-	
+
 	<script src="{{asset('assets/frontend/js/jquery-1.12.4.minb8ff.js?ver=1.12.4')}}"></script>
 	<script src="{{asset('assets/frontend/js/jquery-ui-1.12.4.minb8ff.js?ver=1.12.4')}}"></script>
 	<script src="{{asset('assets/frontend/js/bootstrap.min.js')}}"></script>

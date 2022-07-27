@@ -13,5 +13,6 @@ class ProductOption extends Model
 
     function option(){
         return $this->belongsTo(Option::class,'option_id','id');
-    }
+    } 
 }
+ 

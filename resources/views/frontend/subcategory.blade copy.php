@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title', $data['subcategory']->meta_title)
+@section('title', 'Shop')
 @section('main-content')
 
     <!--main area-->
@@ -10,7 +10,7 @@
             <div class="wrap-breadcrumb">
                 <ul>
                     <li class="item-link"><a href="{{ route('frontend.home') }}" class="link">home</a></li>
-                    <li class="item-link"><span>{{$data['subcategory']->title }}</span></li>
+                    <li class="item-link"><span>Products</span></li>
                 </ul>
             </div>
             <div class="row">
@@ -27,12 +27,11 @@
                     <div class="row">
 
                         <ul class="product-list grid-products equal-container">
-                            @if($data['subcategory']->products->count() > 0)
-                            @foreach ($data['subcategory']->products as $product)
+                            @foreach ($data['hot_products'] as $product)
                                 @php
                                     $image = $product->productImages()->first();
                                 @endphp
-                              
+                                @if ($product->hot_key == 1)
                                     <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
                                         <div class="product product-style-3 equal-elem ">
                                             <div class="product-thumnail">
@@ -52,11 +51,9 @@
                                             </div>
                                         </div>
                                     </li>
-                               
+                                @endif
                             @endforeach
-                            @else
-                            <div class="alert alert-danger">Product not available</div>
-                        @endif
+
                         </ul>
 
                     </div>
@@ -72,6 +69,7 @@
                     </div>
                 </div>
                 <!--end main products area-->
+
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 sitebar">
                     <div class="widget mercado-widget categories-widget">
                         <h2 class="widget-title">All Categories</h2>
@@ -85,7 +83,7 @@
                                             <ul class="sub-cate">
                                                 @foreach ($category->activeSubcategories as $subcategory)
                                                     <li class="category-item"><a
-                                                            href="{{ route('frontend.subcategory', $subcategory->slug) }}"
+                                                            href="{{ route('frontend.product', $product->slug) }}"
                                                             class="cate-link">{{ $subcategory->title }}</a></li>
                                                 @endforeach
                                             </ul>
@@ -95,6 +93,25 @@
                             </ul>
                         </div>
                     </div><!-- Categories widget-->
+
+                    <div class="widget mercado-widget filter-widget brand-widget">
+                        <h2 class="widget-title">Brand</h2>
+                        <div class="widget-content">
+                            <ul class="list-style vertical-list list-limited" data-show="6">
+
+
+
+                                <li class="list-item"><a class="filter-link active" href="#">Samsung</a></li>
+                                <li class="list-item"><a
+                                        data-label='Show less<i class="fa fa-angle-up" aria-hidden="true"></i>'
+                                        class="btn-control control-show-more" href="#">Show more<i
+                                            class="fa fa-angle-down" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div><!-- brand widget-->
+                </div>
+                <!--end sitebar-->
+
             </div>
             <!--end row-->
 
