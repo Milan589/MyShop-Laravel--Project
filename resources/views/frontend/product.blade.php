@@ -63,7 +63,6 @@
                             <div class="wrap-price"><span class="product-price"><del>Rs.{{ $data['product']->price }} </del>Rs.{{ $data['product']->price - $data['product']->discount }}
                             </span></div>
                             <div>
-                            Quantity:
                                 <p class="btn btn-info">
                                         <select name="qty" id="qty">
                                             <option value="">Select quantity</option>

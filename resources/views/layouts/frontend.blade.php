@@ -41,8 +41,26 @@
 						</div>
 						<div class="topbar-menu right-menu">
 							<ul>
-								<li class="menu-item" ><a title="Register or Login" href="login.html">Login</a></li>
-								<li class="menu-item" ><a title="Register or Login" href="register.html">Register</a></li>
+								 @if (auth()->user() != null && auth()->user()->role->name =='customer')
+                          		  <li class="menu-item"><a
+                                    href="#">{{auth()->user()->name}}</a></li>
+
+									<li> <a class="menu-item" href="{{ route('logout') }}"
+										onclick="event.preventDefault();
+											  document.getElementById('logout-form').submit();"><i
+											class="fa fa-sign-out"></i>
+										{{ __('Logout') }}
+
+										<form id="logout-form" action="{{ route('logout') }}" method="POST"
+											class="d-none">
+											@csrf
+										</form>
+									</a>
+								</li>
+                                    @else   
+								<li class="menu-item" ><a title=" Login" href="{{route('frontend.customer.login')}}">Login</a></li>
+								<li class="menu-item" ><a title="Register or Login" href="{{route('frontend.customer.register')}}">Register</a></li>
+								@endif
 							</ul>
 						</div>
 					</div>
@@ -117,9 +135,11 @@
 								<li class="menu-item">
 									<a href="{{route('frontend.cart.list')}}" class="link-term mercado-item-title">Cart</a>
 								</li>
+								@if (auth()->user() != null && auth()->user()->role->name =='customer')
 								<li class="menu-item">
-									<a href="checkout.html" class="link-term mercado-item-title">Checkout</a>
+									<a href="{{route('frontend.checkout')}}" class="link-term mercado-item-title">Checkout</a>
 								</li>
+								@endif
 								<li class="menu-item">
 									<a href="contact-us.html" class="link-term mercado-item-title">Contact Us</a>
 								</li>
@@ -135,7 +155,44 @@
 
 	<footer id="footer">
 		<div class="wrap-footer-content footer-style-1">
+			<div class="wrap-function-info">
+				<div class="container">
+					<ul>
+						<li class="fc-info-item">
+							<i class="fa fa-truck" aria-hidden="true"></i>
+							<div class="wrap-left-info">
+								<h4 class="fc-name">Free Shipping</h4>
+								<p class="fc-desc">Free On Oder Over $99</p>
+							</div>
 
+						</li>
+						<li class="fc-info-item">
+							<i class="fa fa-recycle" aria-hidden="true"></i>
+							<div class="wrap-left-info">
+								<h4 class="fc-name">Guarantee</h4>
+								<p class="fc-desc">30 Days Money Back</p>
+							</div>
+
+						</li>
+						<li class="fc-info-item">
+							<i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+							<div class="wrap-left-info">
+								<h4 class="fc-name">Safe Payment</h4>
+								<p class="fc-desc">Safe your online payment</p>
+							</div>
+
+						</li>
+						<li class="fc-info-item">
+							<i class="fa fa-life-ring" aria-hidden="true"></i>
+							<div class="wrap-left-info">
+								<h4 class="fc-name">Online Suport</h4>
+								<p class="fc-desc">We Have Support 24/7</p>
+							</div>
+
+						</li>
+					</ul>
+				</div>
+			</div>
 			<!--End function info-->
 
 			<div class="main-footer-content">

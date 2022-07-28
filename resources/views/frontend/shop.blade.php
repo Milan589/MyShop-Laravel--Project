@@ -75,8 +75,8 @@
                         <h2 class="widget-title">All Categories</h2>
                         <div class="widget-content">
                             <ul class="list-category">
-                                @foreach ($data['categories'] as $category)
-                                    @if ($category->subcategories->count() > 0)
+                                @foreach ($menu_categories as $category)
+                                    @if ($category->activeSubcategories->count() > 0)
                                         <li class="category-item has-child-cate">
                                             <a href="#" class="cate-link">{{ $category->title }}</a>
                                             <span class="toggle-control">+</span>
@@ -98,8 +98,6 @@
                         <h2 class="widget-title">Brand</h2>
                         <div class="widget-content">
                             <ul class="list-style vertical-list list-limited" data-show="6">
-
-
 
                                 <li class="list-item"><a class="filter-link active" href="#">Samsung</a></li>
                                 <li class="list-item"><a

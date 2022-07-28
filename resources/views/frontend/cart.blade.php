@@ -13,86 +13,86 @@
                 </ul>
             </div>
             <div class=" main-content-area">
-
+                @include('backend.includes.flash')
+                <form action="{{ route('frontend.cart.update') }}" method="post">
+                    @csrf
                 <div class="wrap-iten-in-cart">
                     <h3 class="box-title">Products Name</h3>
-                    @include('backend.includes.flash')
-                    <form action="{{ route('frontend.cart.update') }}" method="post">
-                        @csrf
+                   
                         <ul class="products-cart">
-                            @if (count($carts) > 0)
-                                @php
+                            <table class="table">
+                
+                                <thead>
+                                  <tr>
+                                    <th colspan="2">Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit price</th>                    
+                                    <th colspan="2">Total</th>
+                                  </tr> 
+                                </thead>
+                                <tbody>
+                                  @if(count($carts) > 0)
+                                  @php
                                     $total = 0;
-                                @endphp
-                                @foreach ($carts as $index => $cart)
+                                  @endphp
+                                    @foreach ($carts as $index => $cart)
                                     @php
-                                        $product = \App\Models\Backend\Product::find($cart->id);
-                                        $image = $product->productImages()->first();
-                                        $total += $cart->qty * $cart->price;
+                                         $product= \App\Models\Backend\Product::find($cart->id);
+                                         $image = $product->productImages()->first();
+                                          $total += $cart->qty* $cart->price;
                                     @endphp
-                                    <input type="hidden" name="row_id[]" value="{{ $index }}">
-                                    <li class="pr-cart-item">
-                                        <div class="product-image">
-                                            <figure><img src="{{ asset('images/products/' . $image->image_name) }}" alt="">
-                                            </figure>
-                                        </div>
-                                        <div class="product-name">
-                                            <a class="link-to-product" href="#">{{$cart->name}}</a>
-                                        </div>
-                                        <div class="price-field produtc-price">
-                                            <p class="price">{{$cart->price}}</p>
-                                        </div>
-                                        <div class="quantity">
-                                            <div class="quantity-input">
-                                                <input type="number" name="qty[]" min="1" value="{{$cart->qty}}"  class="form-control">
-                                                <a class="btn btn-increase" href="#"></a>
-                                                <a class="btn btn-reduce" href="#"></a>
-                                            </div>
-                                        </div>
-                                        <div class="price-field sub-total">
-                                            <p class="price">{{$cart->qty*$cart->price}}</p>
-                                        </div>
-                                        <div class="delete">
-                                            <a href="#" class="btn btn-delete" title="">
-                                                <span>Delete from your cart</span>
-                                                <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="6">Cart is empty</td>
-                                </tr>
-                            @endif
-
+                                    <input type="hidden" name="row_id[]" value="{{$index}}">
+                                  <tr>
+                                    <td><div class="product-image">
+                                        <figure><img src="{{ asset('images/products/' . $image->image_name) }}" alt=""></figure>
+                                    </div></td>
+                                    <td><a href="#">{{$cart->name}}</a></td>
+                                    <td>
+                                      <input type="number" name="qty[]" min="1" value="{{$cart->qty}}" class="form-control"> 
+                                    </td>
+                                    <td>{{$cart->price}}</td>
+                                    
+                                    <td>{{$cart->qty*$cart->price}}</td>
+                                    <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                  </tr>
+                                  @endforeach
+                                  
+                                </tbody>
+                                <tfoot>
+                                   
+                                    <tr>
+                                        <th colspan="5">Total</th>
+                                        <th colspan="2">Rs. {{$total}}</th>
+                                      </tr>
+                                      @else
+                                    <tr>
+                                      <td colspan="6">Cart is empty</td>
+                                    </tr>
+                                    @endif
+                                 
+                                </tfoot>
+                              </table>
                         </ul>
-                    </form>
+                   
                 </div>
-
                 <div class="summary">
-                    <div class="order-summary">
-                        <h4 class="title-box">Order Summary</h4>
-                        <p class="summary-info"><span class="title">Subtotal</span><b class="index">$512.00</b></p>
-                        <p class="summary-info"><span class="title">Shipping</span><b class="index">Free Shipping</b></p>
-                        <p class="summary-info total-info "><span class="title">Total</span><b class="index">$512.00</b>
-                        </p>
-                    </div>
-                    <div class="checkout-info">
-                        <label class="checkbox-field">
-                            <input class="frm-input " name="have-code" id="have-code" value="" type="checkbox"><span>I
-                                have promo code</span>
-                        </label>
-                        <a class="btn btn-checkout" href="checkout.html">Check out</a>
-                        <a class="link-to-shop" href="shop.html">Continue Shopping<i class="fa fa-arrow-circle-right"
-                                aria-hidden="true"></i></a>
-                    </div>
-                    <div class="update-clear">
-                        <a class="btn btn-clear" href="#">Clear Shopping Cart</a>
-                        <a class="btn btn-update" href="#">Update Shopping Cart</a>
-                    </div>
-                </div>
-
+					<div class="order-summary">
+						<h4 class="title-box">Order Summary</h4>
+						<p class="summary-info"><span class="title">Subtotal</span><b class="index">Rs. {{$total}}</b></p>
+						<p class="summary-info"><span class="title">Shipping</span><b class="index">Free Shipping</b></p>
+						<p class="summary-info total-info "><span class="title">Total</span><b class="index">Rs. {{$total}}</b></p>
+					</div>
+					<div class="checkout-info">
+                        <button type="submit" class="btn btn-checkout col-6" >Update Cart</button>
+                        @if (auth()->user() != null && auth()->user()->role->name =='customer')
+						<a class="btn btn-checkout" href="{{route('frontend.checkout')}}">Check out</a>
+                        @else
+                        <a class="btn btn-checkout" href="{{route('frontend.customer.login')}}">Login to Check out</a>
+                        @endif
+						<a class="link-to-shop" href="{{route('frontend.shop')}}">Continue Shopping<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+					</div>
+               
+				</div>
                 {{-- <div class="wrap-show-advance-info-box style-1 box-in-site">
                     <h3 class="title-box">Most Viewed Products</h3>
                     <div class="wrap-products">
@@ -280,7 +280,7 @@
                     </div>
                     <!--End wrap-products-->
                 </div> --}}
-
+            </form>
             </div>
             <!--end main content area-->
         </div>

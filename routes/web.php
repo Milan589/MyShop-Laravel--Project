@@ -28,16 +28,16 @@ Route::get('/tag/{slug}', [App\Http\Controllers\Frontend\HomeController::class, 
 Route::post('/cart/add', [App\Http\Controllers\Frontend\HomeController::class, 'addToCart'])->name('frontend.cart.add');
 Route::get('/cart/list', [App\Http\Controllers\Frontend\HomeController::class, 'cartList'])->name('frontend.cart.list');
 Route::post('/cart/update', [App\Http\Controllers\Frontend\HomeController::class, 'updateCart'])->name('frontend.cart.update');
-// Route::get('/customer/register', [App\Http\Controllers\Frontend\CustomerController::class, 'registerForm'])->name('frontend.customer.register');
-// Route::get('/customer/login', [App\Http\Controllers\Frontend\CustomerController::class, 'login'])->name('frontend.customer.login');
-// Route::post('/customer/doregister', [App\Http\Controllers\Frontend\CustomerController::class, 'register'])->name('frontend.customer.doregister');
-// Route::get('/customer/home', [App\Http\Controllers\Frontend\CustomerController::class, 'home'])->name('frontend.customer.home');
-// Route::get('/checkout', [App\Http\Controllers\Frontend\HomeController::class, 'checkout'])->name('frontend.checkout');
-// Route::post('/cart/checkout', [App\Http\Controllers\Frontend\HomeController::class, 'doCheckout'])->name('frontend.docheckout');
+Route::get('/customer/register', [App\Http\Controllers\Frontend\CustomerController::class, 'registerForm'])->name('frontend.customer.register');
+Route::get('/customer/login', [App\Http\Controllers\Frontend\CustomerController::class, 'login'])->name('frontend.customer.login');
+Route::post('/customer/doregister', [App\Http\Controllers\Frontend\CustomerController::class, 'register'])->name('frontend.customer.doregister');
+Route::get('/customer/home', [App\Http\Controllers\Frontend\CustomerController::class, 'home'])->name('frontend.customer.home');
+Route::get('/cart/checkout', [App\Http\Controllers\Frontend\HomeController::class, 'checkout'])->name('frontend.checkout');
+Route::post('/cart/checkout', [App\Http\Controllers\Frontend\HomeController::class, 'doCheckout'])->name('frontend.docheckout');
 
 // //payment
-// Route::get('success', [\App\Http\Controllers\Frontend\HomeController::class,'success']);
-// Route::get('error', [\App\Http\Controllers\Frontend\HomeController::class,'error']);
+Route::get('success', [\App\Http\Controllers\Frontend\HomeController::class,'success']);
+Route::get('error', [\App\Http\Controllers\Frontend\HomeController::class,'error']);
 
 ###################### BackendPart ###########################
 Route::get('/home', [App\Http\Controllers\BackendController::class, 'index'])->name('home')->middleware(['auth']);

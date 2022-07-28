@@ -123,7 +123,7 @@
 			<div class="wrap-products">
 				<div class="wrap-product-tab tab-style-1">
 					<div class="tab-control">
-						@foreach ($data['categories'] as $category)
+						@foreach ($menu_categories as $category)
 						<a href="#fashion_1a" class="tab-control-item active">{{$category->title}}</a>
 						@endforeach
 					</div>
