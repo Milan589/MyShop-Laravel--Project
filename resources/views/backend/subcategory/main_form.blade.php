@@ -35,6 +35,6 @@
     <input type="radio" name="status" id="deactive" value="0" checked>Deactive
 </div>
 <div class="form-group">
-    {!! Form::submit($button.' '.$module,['class'=>'btn btn-success']) !!}
+    {!! Form::submit($button.' '.$module,['class'=>'btn btn-info']) !!}
 
 </div>

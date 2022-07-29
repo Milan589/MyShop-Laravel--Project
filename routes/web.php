@@ -31,20 +31,20 @@ Route::post('/cart/update', [App\Http\Controllers\Frontend\HomeController::class
 Route::get('/customer/register', [App\Http\Controllers\Frontend\CustomerController::class, 'registerForm'])->name('frontend.customer.register');
 Route::get('/customer/login', [App\Http\Controllers\Frontend\CustomerController::class, 'login'])->name('frontend.customer.login');
 Route::post('/customer/doregister', [App\Http\Controllers\Frontend\CustomerController::class, 'register'])->name('frontend.customer.doregister');
-Route::get('/customer/home', [App\Http\Controllers\Frontend\CustomerController::class, 'home'])->name('frontend.customer.home');
-Route::get('/cart/checkout', [App\Http\Controllers\Frontend\HomeController::class, 'checkout'])->name('frontend.checkout');
-Route::post('/cart/checkout', [App\Http\Controllers\Frontend\HomeController::class, 'doCheckout'])->name('frontend.docheckout');
+Route::get('/customer/home', [App\Http\Controllers\Frontend\CustomerController::class, 'home'])->name('frontend.customer.home')->middleware(['auth']);
+Route::get('/cart/checkout', [App\Http\Controllers\Frontend\HomeController::class, 'checkout'])->name('frontend.checkout')->middleware(['auth']);
+Route::post('/cart/checkout', [App\Http\Controllers\Frontend\HomeController::class, 'doCheckout'])->name('frontend.docheckout')->middleware(['auth']);
 
 // //payment
-Route::get('success', [\App\Http\Controllers\Frontend\HomeController::class,'success']);
-Route::get('error', [\App\Http\Controllers\Frontend\HomeController::class,'error']);
+Route::get('success', [\App\Http\Controllers\Frontend\HomeController::class,'success'])->middleware(['auth']);
+Route::get('error', [\App\Http\Controllers\Frontend\HomeController::class,'error'])->middleware(['auth']);
 
 ###################### BackendPart ###########################
-Route::get('/home', [App\Http\Controllers\BackendController::class, 'index'])->name('home')->middleware(['auth']);
+Route::get('/home', [App\Http\Controllers\BackendController::class, 'index'])->name('home')->middleware(['auth','check_admin_role']);
 
 ################# TagController ################
 
-Route::prefix('backend/tag')->name('backend.tag.')->group(function(){
+Route::prefix('backend/tag')->name('backend.tag.')->middleware(['auth','check_admin_role'])->group(function(){
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash',[\App\Http\Controllers\Backend\TagController::class,'trash'])->name('trash');
@@ -77,7 +77,7 @@ Route::prefix('backend/tag')->name('backend.tag.')->group(function(){
 
 ################# CategoryController ################
 
-Route::prefix('backend/category')->name('backend.category.')->group(function(){
+Route::prefix('backend/category')->name('backend.category.')->middleware(['auth','check_admin_role'])->group(function(){
 //to show deleted data
 //it should be given priority show kept on top
 Route::get('/trash',[\App\Http\Controllers\Backend\CategoryController::class,'trash'])->name('trash');
@@ -109,7 +109,7 @@ Route::put('/{id}',[\App\Http\Controllers\Backend\CategoryController::class,'upd
 
 ################# SubategoryController ################
 
-Route::prefix('backend/subcategory')->name('backend.subcategory.')->middleware(['auth'])->group(function(){
+Route::prefix('backend/subcategory')->name('backend.subcategory.')->middleware(['auth','check_admin_role'])->group(function(){
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash',[\App\Http\Controllers\Backend\SubcategoryController::class,'trash'])->name('trash');
@@ -141,7 +141,7 @@ Route::prefix('backend/subcategory')->name('backend.subcategory.')->middleware([
 
 ################# BrandController ################
 
-Route::prefix('backend/brand')->name('backend.brand.')->group(function(){
+Route::prefix('backend/brand')->name('backend.brand.')->middleware(['auth','check_admin_role'])->group(function(){
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash',[\App\Http\Controllers\Backend\BrandController::class,'trash'])->name('trash');
@@ -170,7 +170,7 @@ Route::prefix('backend/brand')->name('backend.brand.')->group(function(){
 
     ################# ProductController ################
 
-Route::prefix('backend/product')->name('backend.product.')->group(function(){
+Route::prefix('backend/product')->name('backend.product.')->middleware(['auth','check_admin_role'])->group(function(){
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash',[\App\Http\Controllers\Backend\ProductController::class,'trash'])->name('trash');
@@ -202,7 +202,7 @@ Route::prefix('backend/product')->name('backend.product.')->group(function(){
 
 ################ AttributeController ############
 
-Route::prefix('backend/attribute')->name('backend.attribute.')->group(function(){
+Route::prefix('backend/attribute')->name('backend.attribute.')->middleware(['auth','check_admin_role'])->group(function(){
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash',[\App\Http\Controllers\Backend\AttributeController::class,'trash'])->name('trash');
@@ -231,7 +231,7 @@ Route::prefix('backend/attribute')->name('backend.attribute.')->group(function()
 
     ################ SettingController ############
 
-Route::prefix('backend/setting')->name('backend.setting.')->group(function(){
+Route::prefix('backend/setting')->name('backend.setting.')->middleware(['auth','check_admin_role'])->group(function(){
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash',[\App\Http\Controllers\Backend\SettingController::class,'trash'])->name('trash');
@@ -261,7 +261,7 @@ Route::prefix('backend/setting')->name('backend.setting.')->group(function(){
 
      ################ RoleController ############
 
-Route::prefix('backend/role')->name('backend.role.')->group(function(){
+Route::prefix('backend/role')->name('backend.role.')->middleware(['auth','check_admin_role'])->group(function(){
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash',[\App\Http\Controllers\Backend\RoleController::class,'trash'])->name('trash');

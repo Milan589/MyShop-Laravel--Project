@@ -42,10 +42,10 @@ class LoginController extends Controller
     {
         if(Auth::user()->role->name =='customer'){
             return '/customer/home';
-        }else if(Auth::user()->role()->name == "admin"){
+        }else if(Auth::user()->role->name == "admin"){
             return '/home';
         }
-        else if(Auth::user()->role()->name == 'subadmin'){
+        else if(Auth::user()->role->name == 'subadmin'){
             return '/home';
         }
 

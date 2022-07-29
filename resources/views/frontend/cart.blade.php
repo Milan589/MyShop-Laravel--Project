@@ -76,12 +76,6 @@
                    
                 </div>
                 <div class="summary">
-					<div class="order-summary">
-						<h4 class="title-box">Order Summary</h4>
-						<p class="summary-info"><span class="title">Subtotal</span><b class="index">Rs. {{$total}}</b></p>
-						<p class="summary-info"><span class="title">Shipping</span><b class="index">Free Shipping</b></p>
-						<p class="summary-info total-info "><span class="title">Total</span><b class="index">Rs. {{$total}}</b></p>
-					</div>
 					<div class="checkout-info">
                         <button type="submit" class="btn btn-checkout col-6" >Update Cart</button>
                         @if (auth()->user() != null && auth()->user()->role->name =='customer')
