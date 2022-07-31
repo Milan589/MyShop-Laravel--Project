@@ -7,12 +7,14 @@ use App\Models\Backend\Category;
 use App\Models\Backend\Order;
 use App\Models\Backend\OrderDetail;
 use App\Models\Backend\Product;
+use App\Models\Backend\Setting;
 use App\Models\Backend\Subcategory;
 use App\Models\Backend\Tag;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Laravel\Ui\Presets\React;
 use Omnipay\Omnipay;
@@ -33,8 +35,10 @@ class HomeController extends FrontendBaseController
 
     function index()
     {
+
         $data['flash_products'] = Product::where('status', 1)->where('flash_key', 1)->get();
         $data['hot_products'] = Product::where('status', 1)->where('hot_key', 1)->get();
+        $data['setting'] = Setting::where('status',0)->first();
         return view($this->__LoadDataToView('frontend.home'), compact('data'));
     }
 
@@ -42,6 +46,7 @@ class HomeController extends FrontendBaseController
     {
         $data['hot_products'] = Product::where('status', 1)->where('hot_key', 1)->get();
         $data['flash_products'] = Product::where('status', 1)->where('flash_key', 1)->get();
+        $data['setting'] =Setting::where('status',0)->first();
         return view($this->__LoadDataToView('frontend.shop'), compact('data'));
     }
 
@@ -49,6 +54,7 @@ class HomeController extends FrontendBaseController
     {
         $data['subcategory'] = Subcategory::where('slug', $slug)->first();
         $data['flash_products'] = Product::where('status', 1)->where('flash_key', 1)->get();
+        $data['setting'] =Setting::where('status',0)->first();
         return view($this->__LoadDataToView('frontend.subcategory'), compact('data'));
     }
     function product($slug)
@@ -56,18 +62,20 @@ class HomeController extends FrontendBaseController
         // $data['carts'] = Cart::content()->count();
         $data['product'] = Product::where('slug', $slug)->first();
         $data['flash_products'] = Product::where('status', 1)->where('flash_key', 1)->get();
+        $data['setting'] =Setting::where('status',0)->first();
         return view($this->__LoadDataToView('frontend.product'), compact('data'));
     }
     function tag($slug)
     {
         $data['categories'] = Category::where('status', 1)->get();
         $data['tag'] = Tag::where('slug', $slug)->first();
+        $data['setting'] =Setting::where('status',0)->first();
         return view($this->__LoadDataToView('frontend.tag'), compact('data'));
     }
     function addToCart(Request $request)
     {
-        $options =[];
-        if(!empty($request->options)){
+        $options = [];
+        if (!empty($request->options)) {
             $options = $request->options;
         }
         Cart::add(
@@ -85,10 +93,12 @@ class HomeController extends FrontendBaseController
     }
     function cartList()
     {
+        $data['setting'] =Setting::where('status',0)->first();
         return view($this->__LoadDataToView('frontend.cart'));
     }
     function updateCart(Request $request)
     {
+        $data['setting'] =Setting::where('status',0)->first();
         $row_ids = $request->input('row_id');
         $qtys = $request->input('qty');
         for ($i = 0; $i < count($row_ids); $i++) {
@@ -99,10 +109,12 @@ class HomeController extends FrontendBaseController
     }
     function checkout()
     {
+        $data['setting'] =Setting::where('status',0)->first();
         return view($this->__LoadDataToView('frontend.checkout'));
     }
     function doCheckout(Request $request)
     {
+        $data['setting'] =Setting::where('status',0)->first();
         try {
             $order_data = [
                 'customer_id' => auth()->user()->id,
@@ -117,7 +129,7 @@ class HomeController extends FrontendBaseController
             ];
             $order = Order::create($order_data);
             if ($order) {
-                $to =0;
+                $to = 0;
                 $order_detail_data['order_id'] = $order->id;
                 foreach (Cart::content() as $rowid => $cart_item) {
                     $order_detail_data['product_id'] = $cart_item->id;
@@ -126,14 +138,14 @@ class HomeController extends FrontendBaseController
                     $order_detail_data['option'] = 'test';
 
                     OrderDetail::create($order_detail_data);
-                    $to = $to + ($cart_item->qty*$cart_item->price);
+                    $to = $to + ($cart_item->qty * $cart_item->price);
                     Cart::remove($rowid);
                     $request->session()->flash('success', ' Order  successfully!!');
                 }
-                if($request->payment_mode == 'online'){
-                    Session:: put('order_id',$order->id);
+                if ($request->payment_mode == 'online') {
+                    Session::put('order_id', $order->id);
                     $response = $this->gateway->purchase(array(
-                        'amount' =>round($to),
+                        'amount' => round($to),
                         'currency' => env('PAYPAL_CURRENCY'),
                         'returnUrl' => url('success'),
                         'cancelUrl' => url('error'),
@@ -156,6 +168,7 @@ class HomeController extends FrontendBaseController
     }
     public function success(Request $request)
     {
+        $data['setting'] =Setting::where('status',0)->first();
         // Once the transaction has been approved, we need to complete it.
         if ($request->input('paymentId') && $request->input('PayerID')) {
             $transaction = $this->gateway->completePurchase(array(
@@ -170,7 +183,7 @@ class HomeController extends FrontendBaseController
 
                 // Insert transaction data into the database
                 $payment = new Payment();
-                $payment->order_id = Session:: get('order_id');
+                $payment->order_id = Session::get('order_id');
                 $payment->payment_id = $arr_body['id'];
                 $payment->payer_id = $arr_body['payer']['payer_info']['payer_id'];
                 $payment->payer_email = $arr_body['payer']['payer_info']['email'];
@@ -179,12 +192,12 @@ class HomeController extends FrontendBaseController
                 $payment->payment_status = $arr_body['state'];
                 $payment->save();
 
-                Session::flash('success','Payment is successful. Your transaction id is: ' . $arr_body['id']);
+                Session::flash('success', 'Payment is successful. Your transaction id is: ' . $arr_body['id']);
             } else {
                 return $response->getMessage();
             }
         } else {
-            Session::flash('erroe','Transaction is declined');
+            Session::flash('error', 'Transaction is declined');
         }
         return redirect()->route('frontend.checkout');
     }
@@ -196,4 +209,10 @@ class HomeController extends FrontendBaseController
     {
         Session::flash('User cancelled the payment.');
     }
+
+    public function paymentDetail(){
+        $data['records'] = Payment::where('payment_status','Approved')->get();
+        return view('backend.payment.index',compact('data'));
+    }
+   
 }

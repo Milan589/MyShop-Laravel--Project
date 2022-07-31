@@ -1,6 +1,8 @@
 @extends('layouts.backend')
 @section('title', $module . ' list')
-
+@section('css')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+@endsection
 @section('content')
     <section class="content-header">
         <div class="container-fluid">

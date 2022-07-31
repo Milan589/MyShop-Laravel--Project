@@ -158,4 +158,14 @@
 
 	</main>
 	<!--main area-->
+	<script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#ecommerce1').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true
+            });
+        });
+    </script>
 @endsection

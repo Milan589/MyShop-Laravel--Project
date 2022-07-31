@@ -81,7 +81,7 @@
                                                     </td>
                                                     <td><a href="#">{{ $cart->name }}</a></td>
                                                     <td>
-                                                        {{ $cart->qty }}"
+                                                        {{ $cart->qty }}
                                                     </td>
                                                     <td>{{ $cart->price }}</td>
 

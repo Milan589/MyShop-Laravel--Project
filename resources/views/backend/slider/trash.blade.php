@@ -14,13 +14,14 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <!-- Default box -->
+
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"> {{ $module }} List
-                <a href="{{ route($base_route . 'create') }}" @class('btn btn-info')">Create</a>
-                <a href="{{ route($base_route . 'trash') }}" @class('btn btn-danger')">Trash</a>
+            <h3 class="card-title">Trash {{ $module }} List
+                <a href="{{ route($base_route . 'create') }}" @class('btn btn-success')">Create</a>
+                <a href="{{ route($base_route . 'index') }}" @class('btn btn-info')">List</a>
             </h3>
+
         </div>
         <div class="card-body">
             @include('backend.includes.flash')
@@ -57,13 +58,17 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route($base_route . 'show', $record->id) }}" class="btn btn-primary">View</a>
-                                <a href="{{ route($base_route . 'edit', $record->id) }}" class="btn btn-warning">Edit</a>
-                                <form action="{{ route($base_route . 'destroy', $record->id) }}" method="post"
+
+                                <form action="{{ route($base_route . 'restore', $record->id) }}" method="post"
                                     style="display: inline-block">
-                                    @method('delete')
                                     @csrf
-                                    <input type="submit" value="delete" class='btn btn-danger'>
+                                    <input type="submit" value="Restore" class='btn btn-success'>
+                                </form>
+                                <form action="{{ route($base_route . 'force_delete', $record->id) }}" method="post"
+                                    style="display: inline-block">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="submit" value="Delete" class='btn btn-danger'>
                                 </form>
                             </td>
                         </tr>
@@ -71,6 +76,12 @@
                 </tbody>
             </table>
         </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            Footer
+        </div>
+        <!-- /.card-footer-->
     </div>
     <!-- /.card -->
+
 @endsection

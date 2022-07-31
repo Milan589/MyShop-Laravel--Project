@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\Backend;
 
-
+use App\Models\Backend\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Backend\Role;
+use Illuminate\Support\Facades\Hash;
 
-class RoleController extends BackendBaseController
+class UserController extends BackendBaseController
 {
-    protected $module = 'Role';
-    protected  $base_view = 'backend.role.';
-    protected  $base_route = 'backend.role.';
-    // protected  $file_path = 'images' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'role' . DIRECTORY_SEPARATOR;
-
-
+    protected $module = 'User';
+    protected  $base_view = 'backend.user.';
+    protected  $base_route = 'backend.user.';
     function __construct()
     {
-        $this->model = new Role();
+        $this->model = new User();
     }
     /**
      * Display a listing of the resource.
@@ -37,7 +35,7 @@ class RoleController extends BackendBaseController
      */
     public function create()
     {
-        $data['units'] = $this->model->pluck('name', 'id');
+        $data['roles'] = $this->model->pluck('name', 'id');
         return view($this->__loadDataToView($this->base_view . 'create'), compact('data'));
     }
 
@@ -52,23 +50,24 @@ class RoleController extends BackendBaseController
         $request->validate(
             [
                 'name' => 'required',
-                'key' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
             ]
         );
         try {
             $request->request->add(['created_by' => Auth::user()->id]);
+            $request->request->add(['password' =>  Hash::make($request->password)]);
             $record = $this->model->create($request->all());
             if ($record) {
-                $request->session()->flash('success', $this->module . 'Created Successfully.');
+                $request->session()->flash('success', $this->module . ' Created Successfully.');
             } else {
-                $request->session()->flash('error', $this->module . 'Creation Failed!!');
+                $request->session()->flash('error', $this->module . ' Creation Failed!!');
             }
         } catch (\Exception $exception) {
             $request->session()->flash('error', 'Error: ' . $exception->getMessage());
         }
         return redirect()->route($this->base_route . 'index');
     }
-
     /**
      * Display the specified resource.
      *
@@ -93,7 +92,7 @@ class RoleController extends BackendBaseController
      */
     public function edit($id)
     {
-        $data['roles'] = $this->model->pluck('name', 'id');
+        $data['roles'] = User::pluck('name', 'id');
         $data['record'] = $this->model->find($id);
         if ($data['record']) {
             return view($this->__loadDataToView($this->base_view . 'edit'), compact('data'));
@@ -113,24 +112,17 @@ class RoleController extends BackendBaseController
     public function update(Request $request, $id)
     {
         $data['record'] = $this->model->find($id);
-        $request->validate([
-            'name' => 'required',
-            'key' => 'required',
-        ]);
-        if (!$data['record']) {
-            request()->session()->flash('error', 'Error: Invalid Request');
-            return redirect()->route($this->base_route . 'index');
+
+        if (!empty($request->password)) {
+            $request->request->add(['password' =>  Hash::make($request->password)]);
+        } else {
+            $request->request->add(['password' =>  $data['record']->password]);
         }
-        try {
-            $request->request->add(['updated_by' => auth()->user()->id]);
-            $record = $data['record']->update($request->all());
-            if ($record) {
-                $request->session()->flash('success', $this->module . ' update success');
-            } else {
-                $request->session()->flash('error', $this->module . ' update failed');
-            }
-        } catch (\Exception $exception) {
-            $request->session()->flash('error', 'Error: ' . $exception->getMessage());
+        $request->request->add(['updated_by' => Auth::user()->id]);
+        if ($data['record']->update($request->all())) {
+            $request->session()->flash('success', $this->module . ' update success');
+        } else {
+            $request->session()->flash('error', $this->module . ' update failed');
         }
         return redirect()->route($this->base_route . 'index');
     }
@@ -141,7 +133,7 @@ class RoleController extends BackendBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request  $request, $id)
+    public function destroy(Request $request, $id)
     {
         $data['record'] =  $this->model->find($id);
         if (!$data['record']) {
@@ -159,7 +151,7 @@ class RoleController extends BackendBaseController
     // to display deleted data
     public function trash()
     {
-        $data['records'] =  $this->model->onlyTrashed()->get();
+        $data['records'] = $this->model->onlyTrashed()->get();
         return view($this->__LoadDataToView($this->base_view . 'trash'), compact('data'));
     }
 
@@ -201,12 +193,4 @@ class RoleController extends BackendBaseController
             return redirect()->route($this->base_route . 'index');
         }
     }
-    // //permission role
-    // public function assignPermission(Request  $request)
-    // {
-    //     $data['record'] = $this->model->find($request->role_id);
-    //     $data['record']->permissions()->sync($request->permission_id);
-    //     $request->session()->flash('success', $this->module . ' Assigned Successfully.');
-    //     return redirect()->route($this->base_route . 'index');
-    // }
 }

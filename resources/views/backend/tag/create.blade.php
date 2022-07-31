@@ -77,12 +77,5 @@
 
 @endsection
 @section('js')
-    <script>
-        $("#title").keyup(function() {
-            var Text = $(this).val();
-            Text = Text.toLowerCase();
-            Text = Text.replace('/\s/g', '-');
-            $("#slug").val(Text);
-        });
-    </script>
+
 @endsection

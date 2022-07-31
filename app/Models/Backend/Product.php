@@ -35,4 +35,8 @@ class Product extends Model
     function productOptions(){
         return $this->hasMany(ProductOption::class,'product_id','id');
     }
+ 
+    function orderItems(){
+        return $this->hasMany(OrderDetail::class);
+    }
 }

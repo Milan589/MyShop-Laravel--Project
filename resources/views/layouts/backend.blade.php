@@ -10,7 +10,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{{ asset('assets/backend/img/favicon.ico')}}" rel="icon">
+    <link href="{{ asset('assets/backend/img/favicon.ico') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,14 +63,14 @@
                     <div class="ms-3">
                         <h6 class="mb-0">
                             @if (Auth::check())
-                            <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+                                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
                             @endif
                         </h6>
                         {{-- <span>Admin</span> --}}
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="{{url('/home')}}" class="nav-item nav-link active"><i
+                    <a href="{{ url('/home') }}" class="nav-item nav-link active"><i
                             class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
@@ -79,18 +79,18 @@
                             <li class="nav-item">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/tag/create')}}" class="nav-link">
+                                        <a href="{{ url('../backend/tag/create') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>Create</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/tag')}}" class="nav-link">
+                                        <a href="{{ url('../backend/tag') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>List</p>
                                         </a>
                                     </li>
-    
+
                                 </ul>
                             </li>
                         </div>
@@ -102,13 +102,13 @@
                             <li class="nav-item">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/category/create')}}" class="nav-link">
+                                        <a href="{{ url('../backend/category/create') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>Create</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/category')}}" class="nav-link">
+                                        <a href="{{ url('../backend/category') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>List</p>
                                         </a>
@@ -124,18 +124,18 @@
                             <li class="nav-item">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/subcategory/create')}}" class="nav-link">
+                                        <a href="{{ url('../backend/subcategory/create') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>Create</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/subcategory')}}" class="nav-link">
+                                        <a href="{{ url('../backend/subcategory') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>List</p>
                                         </a>
                                     </li>
-    
+
                                 </ul>
                             </li>
                         </div>
@@ -147,18 +147,110 @@
                             <li class="nav-item">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/product/create')}}" class="nav-link">
+                                        <a href="{{ url('../backend/product/create') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>Create</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/product')}}" class="nav-link">
+                                        <a href="{{ url('../backend/product') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>List</p>
                                         </a>
                                     </li>
-    
+
+                                </ul>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-th me-2"></i>Orders</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <li class="nav-item">
+                                <ul class="nav nav-treeview">
+                                    {{-- <li class="nav-item">
+                                        <a href="{{ url('../backend/attribute/create') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>Create</p>
+                                        </a>
+                                    </li> --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('../backend/order') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>List</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-th me-2"></i>Payment</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <li class="nav-item">
+                                <ul class="nav nav-treeview">
+                                    {{-- <li class="nav-item">
+                                        <a href="{{ url('../backend/attribute/create') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>Create</p>
+                                        </a>
+                                    </li> --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('../payment') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>List</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Slider</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <li class="nav-item">
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('../backend/slider/create') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>Create</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('../backend/slider') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>List</p>
+                                        </a>
+                                    </li>
+            
+                                </ul>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Role</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <li class="nav-item">
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('../backend/role/create') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>Create</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('../backend/role') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>List</p>
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </li>
                         </div>
@@ -170,18 +262,18 @@
                             <li class="nav-item">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/attribute/create')}}" class="nav-link">
+                                        <a href="{{ url('../backend/attribute/create') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>Create</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/attribute')}}" class="nav-link">
+                                        <a href="{{ url('../backend/attribute') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>List</p>
                                         </a>
                                     </li>
-    
+
                                 </ul>
                             </li>
                         </div>
@@ -193,18 +285,18 @@
                             <li class="nav-item">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/brand/create')}}" class="nav-link">
+                                        <a href="{{ url('../backend/brand/create') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>Create</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/brand')}}" class="nav-link">
+                                        <a href="{{ url('../backend/brand') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>List</p>
                                         </a>
                                     </li>
-    
+
                                 </ul>
                             </li>
                         </div>
@@ -216,18 +308,41 @@
                             <li class="nav-item">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/setting/create')}}" class="nav-link">
+                                        <a href="{{ url('../backend/setting/create') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>Create</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{url('../backend/setting')}}" class="nav-link">
+                                        <a href="{{ url('../backend/setting') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>List</p>
                                         </a>
                                     </li>
-    
+
+                                </ul>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Users</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <li class="nav-item">
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('../backend/user/create') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>Create</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('../backend/user') }}" class="nav-link">
+                                            <i class="far fa-square nav-icon"></i>
+                                            <p>List</p>
+                                        </a>
+                                    </li>
+            
                                 </ul>
                             </li>
                         </div>
@@ -236,7 +351,7 @@
             </nav>
         </div>
         <!-- Sidebar End -->
-
+     
 
         <!-- Content Start -->
         <div class="content">
@@ -258,32 +373,32 @@
                                 alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">
                                 @if (Auth::check())
-                                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+                                    <a href="#" class="d-block">{{ auth()->user()->name }}</a>
                                 @endif
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                             document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
-            
+
             <!-- Widgets Start -->
             <div class="container-fluid pt-4 px-4">
                 @yield('content')
             </div>
             <!-- Widgets End -->
-           
+
         </div>
         <!-- Content End -->
 
@@ -291,27 +406,26 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets/backend/lib/chart/chart.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/lib/tempusdominus/js/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-
-    <!-- Template Javascript -->
-    <script src="{{ asset('assets/backend/js/main.js') }}"></script>
-    
-    <!-- jQuery -->
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    @yield('js')
 </body>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('assets/backend/lib/chart/chart.min.js') }}"></script>
+<script src="{{ asset('assets/backend/lib/easing/easing.min.js') }}"></script>
+<script src="{{ asset('assets/backend/lib/waypoints/waypoints.min.js') }}"></script>
+<script src="{{ asset('assets/backend/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('assets/backend/lib/tempusdominus/js/moment.min.js') }}"></script>
+<script src="{{ asset('assets/backend/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
+<script src="{{ asset('assets/backend/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+<!-- Template Javascript -->
+<script src="{{ asset('assets/backend/js/main.js') }}"></script>
+
+<!-- jQuery -->
+<script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+@yield('js')
 
 </html>

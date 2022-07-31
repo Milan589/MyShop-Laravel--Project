@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Backend\Setting;
 use App\Models\Customer;
 use App\Models\Role;
 use App\Models\User;
@@ -14,10 +15,12 @@ class CustomerController extends FrontendBaseController
 {
     function registerForm()
     {
-        return view($this->__LoadDataToView('frontend.customer.register'));
+        $data['setting'] =Setting::where('status',0)->first();
+        return view($this->__LoadDataToView('frontend.customer.register'),compact('data'));
     }
     function register(Request $request)
     {
+        $data['setting'] =Setting::where('status',0)->first();
         $request->validate(
             [
                 'name' => 'required',
@@ -55,10 +58,12 @@ class CustomerController extends FrontendBaseController
     }
     function login()
     {
-        return view($this->__LoadDataToView('frontend.customer.login'));
+        $data['setting'] =Setting::where('status',0)->first();
+        return view($this->__LoadDataToView('frontend.customer.login'),compact('data'));
     }
     function home()
     {
-        return view($this->__LoadDataToView('frontend.customer.home'));
+        $data['setting'] =Setting::where('status',0)->first();
+        return view($this->__LoadDataToView('frontend.customer.home'),compact('data'));
     }
 }

@@ -1,6 +1,8 @@
 @extends('layouts.backend')
 @section('title', $module . ' list')
-
+@section('css')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+@endsection
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
@@ -14,13 +16,14 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <!-- Default box -->
+
     <div class="card">
         <div class="card-header">
             <h3 class="card-title"> {{ $module }} List
                 <a href="{{ route($base_route . 'create') }}" @class('btn btn-info')">Create</a>
                 <a href="{{ route($base_route . 'trash') }}" @class('btn btn-danger')">Trash</a>
             </h3>
+
         </div>
         <div class="card-body">
             @include('backend.includes.flash')
@@ -29,8 +32,8 @@
                     <tr>
                         <th>SN</th>
                         <th>Title</th>
-                        <th>Slug</th>
-                        <th>Status</th>
+                        <th>Rank</th>
+                        <th>Description</th>
                         <th>Created By</th>
                         <th>Updated By</th>
                         <th>Action</th>
@@ -41,15 +44,10 @@
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
                             <td>{{ $record->title }}</td>
-                            <td>{{ $record->slug }}</td>
-                            {{-- <td>{{$record->status}}</td> --}}
-                            <td>
-                                @include('backend.includes.status', ['status' => $record->status])
-                            </td>
-                            {{-- <td>{{$record->created_by}}</td> --}}
+                            <td>{{ $record->rank }}</td>
+                            <td>  {{ $record->description }} </td>
                             <td>
                                 {{ $record->createdBy->name }}
-                                {{-- {{\App\Models\User::find($record->created_by)->name}} --}}
                             </td>
                             <td>
                                 @if (!empty($record->updated_by))
@@ -71,6 +69,11 @@
                 </tbody>
             </table>
         </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            Footer
+        </div>
+        <!-- /.card-footer-->
     </div>
     <!-- /.card -->
 @endsection

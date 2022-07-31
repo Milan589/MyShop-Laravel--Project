@@ -2,72 +2,71 @@
 
 namespace App\Http\Controllers\Backend;
 
-
+use App\Http\Controllers\Controller;
+use App\Models\Backend\Order;
+use App\Models\Backend\OrderDetail;
+use App\Models\Backend\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Backend\Role;
 
-class RoleController extends BackendBaseController
+class OrderController extends BackendBaseController
 {
-    protected $module = 'Role';
-    protected  $base_view = 'backend.role.';
-    protected  $base_route = 'backend.role.';
-    // protected  $file_path = 'images' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'role' . DIRECTORY_SEPARATOR;
+    // optimization of code
+    protected $base_route = 'backend.order.';
+    protected $base_view = 'backend.order.';
+    protected $module = 'Order';
 
-
-    function __construct()
+    public function __construct()
     {
-        $this->model = new Role();
+        $this->model = new Order();
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $data['records'] = $this->model->orderby('created_at', 'desc')->get();
+        $data['records'] =Order::where('order_status','Placed')->get();
+        // $data['hot_products'] = Product::where('status', 1)->where('hot_key', 1)->get();
+        // $data['flash_products'] = Product::where('status', 1)->where('flash_key', 1)->get();
+        // $data['records'] = $this->model->orderby('created_at', 'desc')->get();
         return view($this->__loadDataToView($this->base_view . 'index'), compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $data['units'] = $this->model->pluck('name', 'id');
-        return view($this->__loadDataToView($this->base_view . 'create'), compact('data'));
-    }
+    // /**
+    //  * Show the form for creating a new resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // // public function create()
+    // // {
+    // //     $data['units'] = $this->model->pluck('name', 'id');
+    // //     return view($this->__loadDataToView($this->base_view . 'create'), compact('data'));
+    // // }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate(
-            [
-                'name' => 'required',
-                'key' => 'required',
-            ]
-        );
-        try {
-            $request->request->add(['created_by' => Auth::user()->id]);
-            $record = $this->model->create($request->all());
-            if ($record) {
-                $request->session()->flash('success', $this->module . 'Created Successfully.');
-            } else {
-                $request->session()->flash('error', $this->module . 'Creation Failed!!');
-            }
-        } catch (\Exception $exception) {
-            $request->session()->flash('error', 'Error: ' . $exception->getMessage());
-        }
-        return redirect()->route($this->base_route . 'index');
-    }
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function store(Request $request)
+    // {
+    //     $request->validate(
+    //         [
+    //             // 'name' => 'required',
+    //             // 'key' => 'required',
+    //         ]
+    //     );
+    //     try {
+    //         $request->request->add(['created_by' => Auth::user()->id]);
+    //         $record = $this->model->create($request->all());
+    //         if ($record) {
+    //             $request->session()->flash('success', $this->module . 'Created Successfully.');
+    //         } else {
+    //             $request->session()->flash('error', $this->module . 'Creation Failed!!');
+    //         }
+    //     } catch (\Exception $exception) {
+    //         $request->session()->flash('error', 'Error: ' . $exception->getMessage());
+    //     }
+    //     return redirect()->route($this->base_route . 'index');
+    // }
 
     /**
      * Display the specified resource.
@@ -77,7 +76,7 @@ class RoleController extends BackendBaseController
      */
     public function show($id)
     {
-        $data['record'] =  $this->model->find($id);
+        $data['record'] = Order::where('id',$id)->first();
         if (!$data['record']) {
             request()->session()->flash('error', 'Error: Invalid Request');
             return redirect()->route($this->base_route . 'index');
@@ -201,12 +200,12 @@ class RoleController extends BackendBaseController
             return redirect()->route($this->base_route . 'index');
         }
     }
-    // //permission role
-    // public function assignPermission(Request  $request)
-    // {
-    //     $data['record'] = $this->model->find($request->role_id);
-    //     $data['record']->permissions()->sync($request->permission_id);
-    //     $request->session()->flash('success', $this->module . ' Assigned Successfully.');
-    //     return redirect()->route($this->base_route . 'index');
-    // }
+    //permission role
+    public function assignPermission(Request  $request)
+    {
+        $data['record'] = $this->model->find($request->role_id);
+        $data['record']->permissions()->sync($request->permission_id);
+        $request->session()->flash('success', $this->module . ' Assigned Successfully.');
+        return redirect()->route($this->base_route . 'index');
+    }
 }

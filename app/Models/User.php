@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'created_by',
+        'updated_by',
     ];
 
     /**
@@ -42,6 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    function createdBy(){
+        return $this->belongsTo(User::class, 'created_by','id');
+    }
+    function updatedBy(){
+        return $this->belongsTo(User::class, 'updated_by','id');
+    }
     function role(){
         return $this->belongsTo(Role::class,'role_id','id');
     }

@@ -48,6 +48,5 @@ class LoginController extends Controller
         else if(Auth::user()->role->name == 'subadmin'){
             return '/home';
         }
-
     }
 }
