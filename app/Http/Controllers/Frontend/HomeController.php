@@ -74,6 +74,7 @@ class HomeController extends FrontendBaseController
     }
     function addToCart(Request $request)
     {
+        $data['setting'] =Setting::where('status',0)->first();
         $options = [];
         if (!empty($request->options)) {
             $options = $request->options;
@@ -94,7 +95,7 @@ class HomeController extends FrontendBaseController
     function cartList()
     {
         $data['setting'] =Setting::where('status',0)->first();
-        return view($this->__LoadDataToView('frontend.cart'));
+        return view($this->__LoadDataToView('frontend.cart'),compact('data'));
     }
     function updateCart(Request $request)
     {
@@ -110,7 +111,7 @@ class HomeController extends FrontendBaseController
     function checkout()
     {
         $data['setting'] =Setting::where('status',0)->first();
-        return view($this->__LoadDataToView('frontend.checkout'));
+        return view($this->__LoadDataToView('frontend.checkout'),compact('data'));
     }
     function doCheckout(Request $request)
     {
@@ -214,5 +215,4 @@ class HomeController extends FrontendBaseController
         $data['records'] = Payment::where('payment_status','Approved')->get();
         return view('backend.payment.index',compact('data'));
     }
-   
 }

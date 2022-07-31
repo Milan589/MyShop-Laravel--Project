@@ -167,16 +167,16 @@
 
                                     @foreach ($data['record']->orderItems as $item)
                                         @php
-                                            $image = $product->productImages()->first();
+                                            // $image = $product->productImages()->first();
                                         @endphp
                                         <tr>
                                             <td>
                                                 <div class="product-image">
-                                                    <figure><img src="{{ asset('images/products/' . $image->image_name) }}"
-                                                            alt=""></figure>
+                                                    {{-- <figure><img src="{{ asset('images/products/' . $image->image_name) }}"
+                                                            alt=""></figure> --}}
                                                 </div>
                                             </td>
-                                            <td><a href="#">{{ $item->auth()->user()->name }}</a></td>
+                                            {{-- <td><a href="#">{{ $item->auth()->user()->name }}</a></td> --}}
                                             <td>
                                                 {{ $item->qty }}"
                                             </td>
