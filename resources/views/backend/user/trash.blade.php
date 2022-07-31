@@ -3,59 +3,57 @@
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 @endsection
-@section('main-content')
-    <!-- Main content -->
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <a href="{{ route('backend.user.create') }}" class="btn btn-info">Create {{ $module }}</a>
-                    <a href="{{ route('backend.user.index') }}" class="btn btn-success">List {{ $module }}</a>
-                    <div class="card card-primary card-outline">
-                        <div class="card-body">
-                            <h5 class="card-title">List {{ $module }}</h5>
-                            <br>
-                            @include('backend.common.flash_message')
-                            <table class="table-bordered table" id="ecommerce1">
-                                <thead>
+@section('content')
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="{{ route('backend.user.create') }}" class="btn btn-info">Create {{ $module }}</a>
+                <a href="{{ route('backend.user.index') }}" class="btn btn-success">List {{ $module }}</a>
+                <div class="card card-primary card-outline">
+                    <div class="card-body">
+                        <h5 class="card-title">List {{ $module }}</h5>
+                        <br>
+                        @include('backend.common.flash_message')
+                        <table class="table-bordered table" id="ecommerce1">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            @foreach ($data['records'] as $record)
+                                <tbody>
                                     <tr>
-                                        <th>SN</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Password</th>
-                                        <th>Action</th>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td>{{ $record->name }}</td>
+                                        <td>{{ $record->email }}</td>
+                                        <td>{{ $record->password }}</td>
+                                        <td>
+                                            <form action="{{ route($base_route . 'restore', $record->id) }}" method="post"
+                                                style="display: inline-block">
+                                                @csrf
+                                                <input type="submit" value="Restore" class='btn btn-success'>
+                                            </form>
+                                            <form action="{{ route($base_route . 'force_delete', $record->id) }}"
+                                                method="post" style="display: inline-block">
+                                                @csrf
+                                                @method('delete')
+                                                <input type="submit" value="Delete" class='btn btn-danger'>
+                                            </form>
+                                        </td>
                                     </tr>
-                                </thead>
-                                @foreach ($data['records'] as $record)
-                                    <tbody>
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $record->name }}</td>
-                                            <td>{{ $record->email }}</td>
-                                            <td>{{ $record->password }}</td>
-                                            <td>
-                                                <form action="{{ route($base_route . 'restore', $record->id) }}"
-                                                    method="post" style="display: inline-block">
-                                                    @csrf
-                                                    <input type="submit" value="Restore" class='btn btn-success'>
-                                                </form>
-                                                <form action="{{ route($base_route . 'force_delete', $record->id) }}"
-                                                    method="post" style="display: inline-block">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <input type="submit" value="Delete" class='btn btn-danger'>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div><!-- /.card -->
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div><!-- /.content -->
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.card -->
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 @endsection
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="

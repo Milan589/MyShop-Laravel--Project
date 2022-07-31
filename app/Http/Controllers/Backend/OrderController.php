@@ -22,6 +22,7 @@ class OrderController extends BackendBaseController
     }
     public function index()
     {
+        
         $data['records'] =Order::where('order_status','Placed')->get();
         // $data['hot_products'] = Product::where('status', 1)->where('hot_key', 1)->get();
         // $data['flash_products'] = Product::where('status', 1)->where('flash_key', 1)->get();

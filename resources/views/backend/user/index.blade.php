@@ -3,9 +3,8 @@
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 @endsection
-@section('main-content')
+@section('content')
     <!-- Main content -->
-    <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -22,7 +21,7 @@
                                         <th>SN</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Password</th>
+                                        <th>Role</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -32,7 +31,7 @@
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $record->name }}</td>
                                             <td>{{ $record->email }}</td>
-                                            <td>{{ $record->password }}</td>
+                                            <td>{{ $record->role->name }}</td>
                                             <td>
                                                 <a href="{{ route($base_route . 'show', $record->id) }}"
                                                     class="btn btn-info">View Details</a>
@@ -54,7 +53,6 @@
                 </div>
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
-    </div><!-- /.content -->
 @endsection
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="

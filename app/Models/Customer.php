@@ -12,5 +12,8 @@ class Customer extends Model
     protected $table = "customers";
     protected $fillable = ['name','perm_address','temp_address','shipping_address','image','phone','user_id'	];
 
+    function customerName(){
+        return $this->belongsTo(Customer::class, 'customer_id','id');
+    }
 }
 

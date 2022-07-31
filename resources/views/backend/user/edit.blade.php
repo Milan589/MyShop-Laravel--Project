@@ -1,8 +1,7 @@
 @extends('layouts.backend')
 @section('title',$module . ' Create')
-@section('main-content')
+@section('content')
     <!-- Main content -->
-    <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -19,5 +18,4 @@
                 </div>
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
-    </div><!-- /.content -->
 @endsection

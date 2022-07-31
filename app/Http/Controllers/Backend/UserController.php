@@ -35,7 +35,7 @@ class UserController extends BackendBaseController
      */
     public function create()
     {
-        $data['roles'] = $this->model->pluck('name', 'id');
+        $data['roles'] = Role::pluck('name', 'id');
         return view($this->__loadDataToView($this->base_view . 'create'), compact('data'));
     }
 
@@ -92,7 +92,7 @@ class UserController extends BackendBaseController
      */
     public function edit($id)
     {
-        $data['roles'] = User::pluck('name', 'id');
+        $data['roles'] = Role::pluck('name', 'id');
         $data['record'] = $this->model->find($id);
         if ($data['record']) {
             return view($this->__loadDataToView($this->base_view . 'edit'), compact('data'));
